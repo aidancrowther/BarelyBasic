@@ -1,6 +1,6 @@
 typedef struct Token {
   byte type;
-  char value[5];
+  char value[6];
 } token;
 
 #define MAX_LENGTH 20
@@ -47,15 +47,20 @@ void tokenizer(){
   byte prev;
   byte holder;
 
+  memcpy(buf, NULL, 6);
+
   for(byte i; i<MAX_LENGTH && input[i]!=NULL; i++){
 
-    memcpy(buf, NULL, 5);
+    byte entry = 0;
+
+    memcpy(buf, NULL, 6);
 
     holder = typeOf(input[i]);
     if(!i) prev = typeOf(input[i]);
 
     while(holder == prev && input[i]!=NULL){
-      buf[i-(iteration*i)] = input[i];
+      buf[entry++] = input[i];
+      buf[entry] = NULL;
       prev = holder;
       holder = typeOf(input[++i]);
     }
